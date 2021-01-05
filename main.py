@@ -34,18 +34,22 @@ class HTTPAlchemy:
             print('Такого номера меню нет!')
 
     def do_request(self):
-        type_requests = input('Enter the type of request: ')
-        url = input('Enter the link of request: ')
-        additional_arguments = input('Enter the parameters that you want to use when prompted, separated by a space(params, data, json, headers,none if you dont want to specify parameters): ')
-        request_items = {}
+        while True:
+            url_and_type = input('Enter the request type and link separated by a space (example - get google.com): ')
 
-        if additional_arguments != 'none':
-            for argument in additional_arguments.split(' '):
-                arg = input(f'Enter the {argument} of request: ')
-                request_items[argument] = eval(arg)
+            type_requests = url_and_type.split(' ')[0]
+            url = url_and_type.split(' ')[1]
 
-        request = _Request(url, **request_items)
-        print(f'Server response:\n{request.do_request(type_requests)}')
+            additional_arguments = input('Enter the parameters that you want to use when prompted, separated by a space(params, data, json, headers,none if you dont want to specify parameters): ')
+            request_items = {}
+
+            if additional_arguments != 'none':
+                for argument in additional_arguments.split(' '):
+                    arg = input(f'Enter the {argument} of request: ')
+                    request_items[argument] = eval(arg)
+
+            request = _Request(url, **request_items)
+            print(f'Server response:\n{request.do_request(type_requests)}')
 
 
 
