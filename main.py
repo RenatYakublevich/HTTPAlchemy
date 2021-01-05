@@ -18,7 +18,8 @@ class HTTPAlchemy:
     def __init__(self):
         pass
 
-    def menu(self):
+    @staticmethod
+    def menu():
         menu_items = [
             '1 - make a requests'
         ]
@@ -26,19 +27,23 @@ class HTTPAlchemy:
         menu_input = input(f"Hello!\n{unpacking_menu_items}\nWrite number: ")
 
         menu = {
-            '1' : self.do_request
+            '1' : HTTPAlchemy.do_request
         }
         try:
             menu[menu_input]()
         except KeyError:
-            print('Такого номера меню нет!')
+            print('There is no such menu number!')
 
-    def do_request(self):
+    @staticmethod
+    def do_request():
         while True:
-            url_and_type = input('Enter the request type and link separated by a space (example - get google.com): ')
+            url_and_type = input('Enter the request type and link separated by a space (example - get https://www.google.com/): ')
 
-            type_requests = url_and_type.split(' ')[0]
-            url = url_and_type.split(' ')[1]
+            try:
+                type_requests = url_and_type.split(' ')[0]
+                url = url_and_type.split(' ')[1]
+            except IndexError:
+                print('Wrong format!')
 
             additional_arguments = input('Enter the parameters that you want to use when prompted, separated by a space(params, data, json, headers,none if you dont want to specify parameters): ')
             request_items = {}
