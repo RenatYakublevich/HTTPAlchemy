@@ -6,13 +6,20 @@ class _Request:
         self.url = url
         self.options = kwargs
 
-    def do_request(self, type_request):
+    def do_request(self, type_request, type_return):
         """
         :param type_request: тип HTTP запроса
+        :param type_return: тип возвращаемого запроса(text / json)
         :return: метод возвращает текст запроса
         """
         response = requests.request(type_request, self.url, **self.options)
-        return response.text
+
+        response_items = {
+            'text' : response.text,
+            'json' : response.json,
+            'status_code' : response.status_code
+        }
+        return response_items[type_return]
 
 class HTTPAlchemy:
     def __init__(self):
@@ -37,11 +44,12 @@ class HTTPAlchemy:
     @staticmethod
     def do_request():
         while True:
-            url_and_type = input('Enter the request type and link separated by a space (example - get https://www.google.com/): ')
+            parameters = input('Enter the request type and link separated by a space and the type of the returned request (example - get https://www.google.com/ json): ')
 
             try:
-                type_requests = url_and_type.split(' ')[0]
-                url = url_and_type.split(' ')[1]
+                type_requests = parameters.split(' ')[0]
+                url = parameters.split(' ')[1]
+                type_return = parameters.split(' ')[2]
             except IndexError:
                 print('Wrong format!')
 
@@ -54,7 +62,7 @@ class HTTPAlchemy:
                     request_items[argument] = eval(arg)
 
             request = _Request(url, **request_items)
-            print(f'Server response:\n{request.do_request(type_requests)}')
+            print(f'Server response:\n{request.do_request(type_requests, type_return)}')
 
 
 
