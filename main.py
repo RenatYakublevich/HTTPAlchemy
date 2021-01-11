@@ -22,9 +22,6 @@ class _Request:
         return response_items[type_return]
 
 class HTTPAlchemy:
-    def __init__(self):
-        pass
-
     @staticmethod
     def menu():
         menu_items = [
