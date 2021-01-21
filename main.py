@@ -9,7 +9,7 @@ class _Request:
     def do_request(self, type_request, type_return):
         """
         :param type_request: тип HTTP запроса
-        :param type_return: тип возвращаемого запроса(text / json)
+        :param type_return: тип возвращаемого значения(text / json)
         :return: метод возвращает текст запроса
         """
         response = requests.request(type_request, self.url, **self.options)
