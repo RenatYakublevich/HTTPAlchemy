@@ -1,0 +1,5 @@
+Preset #1
+get http://equilibriumweb.pythonanywhere.com/api text
+params={'code': 'run 3 + 2'} 
+Preset #2
+get http://equilibriumweb.pythonanywhere.com/api text

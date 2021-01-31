@@ -78,12 +78,17 @@ class HTTPAlchemy:
             values = [value for value in self.request_items.values()]
             for el in range(len(self.request_items.keys())):
                 file.write(f'{keys[el]}={values[el]} ')
+        print('Preset saved!')
 
     def load_preset(self):
         number_preset = int(input('Write number preset: '))
         with open('presets.txt','r',encoding='utf-8') as file:
             all_lines = [line.strip() for line in file]
-            count_line_info = all_lines.index(f'Preset #{number_preset}')
+            try:
+                count_line_info = all_lines.index(f'Preset #{number_preset}')
+            except ValueError:
+                print('Preset not found')
+                exit()
             self.parameters = all_lines[count_line_info + 1]
             try:
                 request_items_line = all_lines[count_line_info + 2]
