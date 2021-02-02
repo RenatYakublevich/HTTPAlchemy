@@ -42,7 +42,7 @@ class HTTPAlchemy:
         menu_items = {
             '1': [self.input_info_request, self.do_request],
             '2': [self.input_info_request, self.save_preset],
-            '3': [self.load_preset, self.do_request]
+            '3': [self.menu_presets, self.do_request]
         }
         try:
             [command() for command in menu_items[menu_input]]
@@ -96,14 +96,13 @@ class HTTPAlchemy:
                 file.write(f'{keys[count]}={values[count]} ')
         print('Preset saved!')
 
-    def load_preset(self):
+    def load_preset(self, number_preset: int):
         """
         Функция отвечает за загрузку пресета из файла presets.txt
         У пресета есть 2 обязательных лайна: номер пресета(пример - Preset #1) и
         описание запроса(пример - get https://vk.com/ text)
         3 лайн не обязательный: необязательные аргументы(пример - params={'code':'run 1 + 2'})
         """
-        number_preset = int(input('Write number preset: '))
         with open('presets.txt','r',encoding='utf-8') as file:
             all_lines = [line.strip() for line in file]
             try:
@@ -118,6 +117,12 @@ class HTTPAlchemy:
                     self.request_items[request_items_line.split('=')[request_item]] = eval(request_items_line.split('=')[request_item + 1])
             except IndexError:
                 pass
+
+    def menu_presets(self):
+        with open('presets.txt') as file:
+           print('\n'.join([line.strip() for line in file]))
+        number_preset = int(input('\nWrite number of preset: '))
+        self.load_preset(number_preset)
 
 
 alchemy = HTTPAlchemy()
